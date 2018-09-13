@@ -1,0 +1,12 @@
+{
+    "description": "",
+    "name": "punktde/codeception-filesystem",
+    "require-dev": {
+        "codeception/codeception": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PunktDe\\Codeception\\Filesystem\\": "Classes/"
+      }
+    }
+}
