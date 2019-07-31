@@ -1,4 +1,5 @@
 <?php
+
 namespace PunktDe\Codeception\Filesystem\Module;
 
 /*
@@ -9,7 +10,6 @@ namespace PunktDe\Codeception\Filesystem\Module;
  * source code.
  */
 
-use Codeception\Extension\Logger;
 use PHPUnit\Framework\Assert;
 
 class Filesystem extends \Codeception\Module\Filesystem
@@ -34,7 +34,7 @@ class Filesystem extends \Codeception\Module\Filesystem
     public function directoriesMatch(string $directoryA, string $directoryB, $prettifyXML = false)
     {
         if ($prettifyXML) {
-            $recursivelyPrettifyXML = function($dir) {
+            $recursivelyPrettifyXML = function ($dir) {
                 foreach (glob($dir . '/' . '*.xml') as $file) {
                     $doc = new \DomDocument();
                     $doc->preserveWhiteSpace = false;
@@ -46,11 +46,10 @@ class Filesystem extends \Codeception\Module\Filesystem
             $recursivelyPrettifyXML($directoryB);
         }
 
-        $diffFile = '/tmp/' . uniqid('woodwingpse_diff_');
-        $exitStatus = shell_exec('diff -r ' . escapeshellarg($directoryA) . ' ' . escapeshellarg($directoryB). ' >' . $diffFile . ' 2>&1; echo -n $?');
+        $diffFile = '/tmp/' . uniqid('directory_diff_');
+        $exitStatus = shell_exec('diff -r ' . escapeshellarg($directoryA) . ' ' . escapeshellarg($directoryB) . ' >' . $diffFile . ' 2>&1; echo -n $?');
         $diff = file_get_contents($diffFile);
         unlink($diffFile);
         Assert::assertEquals('0', $exitStatus, $diff);
     }
-
 }
