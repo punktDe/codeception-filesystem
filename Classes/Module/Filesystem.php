@@ -17,7 +17,7 @@ class Filesystem extends \Codeception\Module\Filesystem
     /**
      * @param string $dir
      */
-    public function createDirectory(string $dir)
+    public function createDirectory(string $dir): void
     {
         mkdir($dir);
     }
@@ -29,9 +29,8 @@ class Filesystem extends \Codeception\Module\Filesystem
      * @param string $directoryA
      * @param string $directoryB
      * @param bool $prettifyXML Format XML files in output directory
-     * @return null
      */
-    public function directoriesMatch(string $directoryA, string $directoryB, $prettifyXML = false)
+    public function directoriesMatch(string $directoryA, string $directoryB, $prettifyXML = false): void
     {
         if ($prettifyXML) {
             $recursivelyPrettifyXML = function ($dir) {
