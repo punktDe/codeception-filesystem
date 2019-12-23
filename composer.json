@@ -2,8 +2,9 @@
     "description": "This package provides a module and gherkin step definitions for codeception testing",
     "name": "punktde/codeception-filesystem",
     "license": "GPL-3.0-or-later",
-    "require-dev": {
-        "codeception/codeception": "*"
+    "require": {
+        "codeception/codeception": "^4.0",
+        "codeception/module-filesystem": "^1.0"
     },
     "autoload": {
         "psr-4": {
