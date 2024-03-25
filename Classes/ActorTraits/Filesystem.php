@@ -51,4 +51,26 @@ trait Filesystem
         $this->SeeFileFound($filename, $path);
     }
 
+    /**
+     * @Given I copy the directory :sourcePath to :destinationPath
+     * @Then I copy the directory :sourcePath to :destinationPath
+     * @param string $sourcePath
+     * @param string $destinationPath
+     */
+    public function iCopyDirectory(string $sourcePath, string $destinationPath)
+    {
+        $this->copyDirectory($sourcePath, $destinationPath);
+    }
+
+    /**
+     * @Given I copy the file :sourceFile to :destinationPath
+     * @Then I copy the file :sourceFile to :destinationPath
+     * @param string $sourceFile
+     * @param string $destinationPath
+     */
+    public function iCopyFile(string $sourceFile, string $destinationPath)
+    {
+        $this->copyFile($sourceFile, $destinationPath);
+    }
+
 }

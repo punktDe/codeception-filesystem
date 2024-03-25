@@ -51,4 +51,48 @@ class Filesystem extends \Codeception\Module\Filesystem
         unlink($diffFile);
         Assert::assertEquals('0', $exitStatus, $diff);
     }
+
+    /**
+     * @param string $sourceFile
+     * @param string $destinationPath
+     */
+    public function copyDirectory(string $sourcePath, string $destinationPath)
+    {
+        $directory = opendir($sourcePath);
+
+        if (is_dir($destinationPath) === false) {
+            mkdir($destinationPath, 0777, true);
+        }
+        while (($file = readdir($directory)) !== false) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            if (is_dir("$sourcePath/$file") === true) {
+                $this->copyDirectory("$sourcePath/$file", "$destinationPath/$file");
+            } else {
+                copy("$sourcePath/$file", "$destinationPath/$file");
+            }
+        }
+        closedir($directory);
+    }
+
+
+    /**
+     * @param string $sourceFile
+     * @param string $destinationPath
+     */
+    public function copyFile(string $sourceFile, string $destinationPath)
+    {
+        if (is_file($sourceFile)) {
+            $fileName = basename($sourceFile);
+            if (!is_dir($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $destinationPath = $destinationPath . "/" . $fileName;
+            copy($sourceFile, $destinationPath);
+        } else {
+            throw new \Exception($sourceFile . " is no file!");
+        }
+    }
 }
