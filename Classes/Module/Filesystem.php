@@ -52,35 +52,11 @@ class Filesystem extends \Codeception\Module\Filesystem
         Assert::assertEquals('0', $exitStatus, $diff);
     }
 
-    /**
-     * @param string $sourceFile
-     * @param string $destinationPath
-     */
-    public function copyDirectory(string $sourcePath, string $destinationPath)
-    {
-        $directory = opendir($sourcePath);
-
-        if (is_dir($destinationPath) === false) {
-            mkdir($destinationPath, 0777, true);
-        }
-        while (($file = readdir($directory)) !== false) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            }
-
-            if (is_dir("$sourcePath/$file") === true) {
-                $this->copyDirectory("$sourcePath/$file", "$destinationPath/$file");
-            } else {
-                copy("$sourcePath/$file", "$destinationPath/$file");
-            }
-        }
-        closedir($directory);
-    }
-
 
     /**
      * @param string $sourceFile
      * @param string $destinationPath
+     * @throws \Exception
      */
     public function copyFile(string $sourceFile, string $destinationPath)
     {

@@ -59,7 +59,7 @@ trait Filesystem
      */
     public function iCopyDirectory(string $sourcePath, string $destinationPath)
     {
-        $this->copyDirectory($sourcePath, $destinationPath);
+        $this->copyDir($sourcePath, $destinationPath);
     }
 
     /**
