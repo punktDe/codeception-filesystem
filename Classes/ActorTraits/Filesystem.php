@@ -74,8 +74,8 @@ trait Filesystem
     }
 
     /**
+     * @Given I delete the directory :directory
      * @Then I delete the directory :directory
-     * @And I delete the directory :directory
      * @param string $directory
      */
     public function iDeleteDir(string $directory)
@@ -85,7 +85,7 @@ trait Filesystem
 
     /**
      * @Then I delete the file :file
-     * @And I delete the file :file
+     * @Given I delete the file :file
      * @param string $file
      */
     public function iDeleteFile(string $file)
