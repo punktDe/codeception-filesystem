@@ -53,7 +53,6 @@ trait Filesystem
 
     /**
      * @Given I copy the directory :sourcePath to :destinationPath
-     * @Then I copy the directory :sourcePath to :destinationPath
      * @param string $sourcePath
      * @param string $destinationPath
      */
@@ -64,7 +63,6 @@ trait Filesystem
 
     /**
      * @Given I copy the file :sourceFile to :destinationPath
-     * @Then I copy the file :sourceFile to :destinationPath
      * @param string $sourceFile
      * @param string $destinationPath
      */
@@ -75,7 +73,6 @@ trait Filesystem
 
     /**
      * @Given I delete the directory :directory
-     * @Then I delete the directory :directory
      * @param string $directory
      */
     public function iDeleteDir(string $directory)
@@ -84,7 +81,6 @@ trait Filesystem
     }
 
     /**
-     * @Then I delete the file :file
      * @Given I delete the file :file
      * @param string $file
      */
