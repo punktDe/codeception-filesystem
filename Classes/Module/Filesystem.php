@@ -10,6 +10,7 @@ namespace PunktDe\Codeception\Filesystem\Module;
  * source code.
  */
 
+use Exception;
 use PHPUnit\Framework\Assert;
 
 class Filesystem extends \Codeception\Module\Filesystem
@@ -50,5 +51,26 @@ class Filesystem extends \Codeception\Module\Filesystem
         $diff = file_get_contents($diffFile);
         unlink($diffFile);
         Assert::assertEquals('0', $exitStatus, $diff);
+    }
+
+
+    /**
+     * @param string $sourceFile
+     * @param string $destinationPath
+     * @throws Exception
+     */
+    public function copyFile(string $sourceFile, string $destinationPath)
+    {
+        if (is_file($sourceFile)) {
+            $fileName = basename($sourceFile);
+            if (is_dir($destinationPath)) {
+                $destinationPath = $destinationPath . '/' . $fileName;
+                copy($sourceFile, $destinationPath);
+            } else {
+                throw new Exception($destinationPath . ' is not a directory!');
+            }
+        } else {
+            throw new Exception($sourceFile . ' is no file!');
+        }
     }
 }
