@@ -73,4 +73,23 @@ trait Filesystem
         $this->copyFile($sourceFile, $destinationPath);
     }
 
+    /**
+     * @Then I delete the directory :directory
+     * @And I delete the directory :directory
+     * @param string $directory
+     */
+    public function iDeleteDir(string $directory)
+    {
+        $this->deleteDir($directory);
+    }
+
+    /**
+     * @Then I delete the file :file
+     * @And I delete the file :file
+     * @param string $file
+     */
+    public function iDeleteFile(string $file)
+    {
+        $this->deleteFile($file);
+    }
 }
