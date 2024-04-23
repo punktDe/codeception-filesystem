@@ -2,6 +2,8 @@
 
 namespace PunktDe\Codeception\Filesystem\ActorTraits;
 
+use Codeception\PHPUnit\TestCase;
+
 trait Filesystem
 {
     /**
@@ -48,13 +50,13 @@ trait Filesystem
      */
     public function iSeeFileFound(string $filename, string $path): void
     {
-        $this->SeeFileFound($filename, $path);
+        $this->seeFileFound($filename, $path);
     }
 
     /**
      * @Given I copy the directory :sourcePath to :destinationPath
-     * @param string $sourcePath
-     * @param string $destinationPath
+     * @param string $sourcePath Source path starting at the current working directory (it's a codeception thing...)
+     * @param string $destinationPath Destination path starting at the current working directory (it's a codeception thing...)
      */
     public function iCopyDirectory(string $sourcePath, string $destinationPath)
     {
@@ -68,16 +70,38 @@ trait Filesystem
      */
     public function iCopyFile(string $sourceFile, string $destinationPath)
     {
-        $this->copyFile($sourceFile, $destinationPath);
+        $absoluteSourceDir = codecept_data_dir($sourceFile);
+        $sourceRealpath = realpath($absoluteSourceDir);
+        
+        if ($sourceRealpath === false) {
+            TestCase::fail('source file ' . $sourceFile . ' does not exist');
+        }
+
+        $absoluteDestinationDir = codecept_data_dir($destinationPath);
+        $destinationRealpath = realpath($absoluteDestinationDir);
+        if ($destinationRealpath === false || !is_dir(destinationRealpath)) {
+            TestCase::fail('destination path ' . $destinationPath . ' does not exist or is not a directory');
+        }
+
+        $this->copyFile($sourceRealpath, $absoluteDestinationDir);
     }
 
     /**
      * @Given I delete the directory :directory
-     * @param string $directory
+     * @param string $directory The directory relative to the codeception data directory
      */
     public function iDeleteDir(string $directory)
     {
-        $this->deleteDir($directory);
+        $absoluteDir = codecept_data_dir($directory);
+        $realpath = realpath($absoluteDir);
+
+        if ($realpath !== false) {
+            codecept_debug('Deleting directory ' . $realpath);
+            $this->deleteDir($realpath);
+        } else {
+            codecept_debug('Not deleting directory ' . $directory . ' because it does not exist');
+            codecept_debug('Absolute path: ' . $absoluteDir);
+        }
     }
 
     /**
@@ -86,6 +110,15 @@ trait Filesystem
      */
     public function iDeleteFile(string $file)
     {
-        $this->deleteFile($file);
+        $absolutePath = codecept_data_dir($file);
+        $realpath = realpath($absolutePath);
+
+        if ($realpath !== false) {
+            codecept_debug('Deleting file ' . $realpath);
+            $this->deleteFile($realpath);
+        } else {
+            codecept_debug('Not deleting file ' . $file . ' because it does not exist');
+            codecept_debug('Absolute path: ' . $absolutePath);
+        }
     }
 }
