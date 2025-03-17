@@ -24,6 +24,13 @@ class Filesystem extends \Codeception\Module\Filesystem
     }
 
 
+    public Function createDirectoryIfItDoesNotExist(string $dir): void
+    {
+        if (!file_exists($dir)) {
+            mkdir($dir, 0755, true);
+        }
+    }
+
     /**
      * Returns null if $directoryA and $directoryB are equal.
      * Returns a diff if $directoryA and $directoryB are different.
