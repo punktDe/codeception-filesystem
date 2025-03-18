@@ -89,7 +89,7 @@ trait Filesystem
      */
     public function iSeeFileFoundWithinOutput(string $filename, string $path): void
     {
-        $this->seeFileFound($filename, codecept_data_dir($path));
+        $this->seeFileFound($filename, codecept_output_dir($path));
     }
 
 
